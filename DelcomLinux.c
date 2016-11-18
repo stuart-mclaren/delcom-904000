@@ -10,7 +10,7 @@
 #include <hidapi/hidapi.h>
 #include <errno.h>
 
-typedef union  HIDPacketStruct {
+typedef union HIDPacketStruct {
   unsigned char  Data[256];
   struct {
     unsigned char MajorCmd;
