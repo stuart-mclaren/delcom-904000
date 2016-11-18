@@ -11,33 +11,11 @@
 
 #include <ctype.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-#include <hidapi/hidapi.h>
 #include <errno.h>
 
-#define DELCOM_HID_VID 0x0FC5
-#define DELCOM_HID_PID 0xB080
-
-#define READ_VERSION_CMD  10
-#define READ_PORT_CMD    100
-#define WRITE_PORT_CMD   101
-
-typedef union HIDPacketStruct {
-  uint8_t data[256];
-  struct {
-    uint8_t major_cmd;
-    uint8_t minor_cmd;
-    uint8_t data_lsb;
-    uint8_t data_msb;
-    uint8_t data_hid[4];
-    uint8_t data_ext[8];
-  } tx;
-  struct {
-    uint8_t cmd;
-  } rx;
-} HIDPacketStruct, *pHIDPacketStruct;
+#include "delcom_linux.h"
 
 int main(int argc, char* argv[]) {
   uint8_t port0, port1;
