@@ -17,6 +17,10 @@
 #include <hidapi/hidapi.h>
 #include <errno.h>
 
+#define READ_VERSION_CMD  10
+#define READ_PORT_CMD    100
+#define WRITE_PORT_CMD   101
+
 typedef union HIDPacketStruct {
   uint8_t data[256];
   struct {
@@ -60,10 +64,7 @@ int main(int argc, char* argv[]) {
     return errno;
   }
 
-  // device found, read device info and display
-  printf("Delcom Device found.\n");
-  // Read Version (Command #10)
-  MyPacket.Rx.Cmd = 10;
+  MyPacket.Rx.Cmd = READ_VERSION_CMD;
   res = hid_get_feature_report(handle, MyPacket.data, 8);
   if (res < 0) {
     printf("Error: Failed to read device (%d:%s)\n", errno, strerror(errno));
@@ -73,8 +74,7 @@ int main(int argc, char* argv[]) {
     printf("Firmware Version: %d\n", MyPacket.data[4]);
   }
 
-  // Read the ports (Command #100).
-  MyPacket.Rx.Cmd = 100;
+  MyPacket.Rx.Cmd = READ_PORT_CMD;
   res = hid_get_feature_report(handle, MyPacket.data, 8);
   if (res < 0) {
     printf("Error: Failed to read device (%d:%s).\n", errno, strerror(errno));
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
     port1 ^= (char) cmd;
     printf("Writing value 0x%02hhx to port1.\n", port1);
     // Write 8 byte command
-    MyPacket.Tx.major_cmd = 101;
+    MyPacket.Tx.major_cmd = WRITE_PORT_CMD;
     // Write to port 1 command
     MyPacket.Tx.minor_cmd = 2;
     // Data to write to port1
