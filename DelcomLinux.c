@@ -17,17 +17,17 @@
 #include <errno.h>
 
 typedef union HIDPacketStruct {
-  unsigned char  Data[256];
+  uint8_t Data[256];
   struct {
-    unsigned char MajorCmd;
-    unsigned char MinorCmd;
-    unsigned char DataLSB;
-    unsigned char DataMSB;
-    unsigned char DataHID[4];
-    unsigned char DataExt[8];
+    uint8_t MajorCmd;
+    uint8_t MinorCmd;
+    uint8_t DataLSB;
+    uint8_t DataMSB;
+    uint8_t DataHID[4];
+    uint8_t DataExt[8];
   } Tx;
   struct {
-    unsigned char Cmd;
+    uint8_t Cmd;
   } Rx;
 } HIDPacketStruct, *pHIDPacketStruct;
 
