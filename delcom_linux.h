@@ -12,6 +12,10 @@
 #define READ_PORT_CMD    100
 #define WRITE_PORT_CMD   101
 
+#define GREEN_COLOR      (1 << 0)
+#define RED_COLOR        (1 << 1)
+#define YELLOW_COLOR     (1 << 2)
+
 typedef union HIDPacketStruct {
   uint8_t data[256];
   struct {
