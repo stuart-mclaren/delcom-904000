@@ -33,17 +33,17 @@ typedef union HIDPacketStruct {
     uint8_t data_msb;
     uint8_t data_hid[4];
     uint8_t data_ext[8];
-  } Tx;
+  } tx;
   struct {
-    uint8_t Cmd;
-  } Rx;
+    uint8_t cmd;
+  } rx;
 } HIDPacketStruct, *pHIDPacketStruct;
 
 int main(int argc, char* argv[]) {
   uint8_t port0, port1;
   int res, cmd;
   hid_device *handle;
-  HIDPacketStruct MyPacket;
+  HIDPacketStruct my_packet;
 
   cmd = -1;
   // Check for command line arguments
@@ -67,26 +67,26 @@ int main(int argc, char* argv[]) {
     return errno;
   }
 
-  MyPacket.Rx.Cmd = READ_VERSION_CMD;
-  res = hid_get_feature_report(handle, MyPacket.data, 8);
+  my_packet.rx.cmd = READ_VERSION_CMD;
+  res = hid_get_feature_report(handle, my_packet.data, 8);
   if (res < 0) {
     printf("Error: Failed to read device (%d:%s)\n", errno, strerror(errno));
     printf("%ls", hid_error(handle));
     return errno;
   } else {
-    printf("Firmware Version: %d\n", MyPacket.data[4]);
+    printf("Firmware Version: %d\n", my_packet.data[4]);
   }
 
-  MyPacket.Rx.Cmd = READ_PORT_CMD;
-  res = hid_get_feature_report(handle, MyPacket.data, 8);
+  my_packet.rx.cmd = READ_PORT_CMD;
+  res = hid_get_feature_report(handle, my_packet.data, 8);
   if (res < 0) {
     printf("Error: Failed to read device (%d:%s).\n", errno, strerror(errno));
     printf("%ls", hid_error(handle));
     return errno;
   } else {
     // Get and Display the current pin values
-    port0 = MyPacket.data[0];
-    port1 = MyPacket.data[1];
+    port0 = my_packet.data[0];
+    port1 = my_packet.data[1];
     printf("port0: 0x%02hhx, port1: 0x%02hhx\n", port0, port1);
   }
 
@@ -96,13 +96,13 @@ int main(int argc, char* argv[]) {
     port1 ^= (char) cmd;
     printf("Writing value 0x%02hhx to port1.\n", port1);
     // Write 8 byte command
-    MyPacket.Tx.major_cmd = WRITE_PORT_CMD;
+    my_packet.tx.major_cmd = WRITE_PORT_CMD;
     // Write to port 1 command
-    MyPacket.Tx.minor_cmd = 2;
+    my_packet.tx.minor_cmd = 2;
     // Data to write to port1
-    MyPacket.Tx.data_lsb = port1;
+    my_packet.tx.data_lsb = port1;
     // Send it
-    hid_send_feature_report(handle, MyPacket.data, 8);
+    hid_send_feature_report(handle, my_packet.data, 8);
   }
 
   printf("All done, closing device and HIDAPI objects!\n");
