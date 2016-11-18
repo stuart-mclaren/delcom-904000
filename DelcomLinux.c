@@ -32,10 +32,10 @@ int main(int argc, char* argv[]) {
   int report_id;
   HIDPacketStruct MyPacket;
 
-  printf("\n");
   cmd = -1;
-  if (argc > 1) {              // Check for command line arguments
-    if(isdigit(argv[1][0])) {
+  // Check for command line arguments
+  if (argc > 1) {
+    if (isdigit(argv[1][0])) {
       cmd = (int) strtol(argv[1], NULL, 0);
     } else {
       printf("Delcom USB Linux Example. Version 1.0.\n");
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
     hid_send_feature_report(handle, MyPacket.Data, 8);
   }
 
-  printf("All done, closing device and HIDAPI objects!\n\n");
+  printf("All done, closing device and HIDAPI objects!\n");
   hid_close(handle);
   hid_exit();
 
