@@ -17,6 +17,9 @@
 #include <hidapi/hidapi.h>
 #include <errno.h>
 
+#define DELCOM_HID_VID 0x0FC5
+#define DELCOM_HID_PID 0xB080
+
 #define READ_VERSION_CMD  10
 #define READ_PORT_CMD    100
 #define WRITE_PORT_CMD   101
@@ -58,7 +61,7 @@ int main(int argc, char* argv[]) {
   }
 
   // Open the device using the VID, PID,
-  handle = hid_open(0x0fc5, 0xb080, NULL);
+  handle = hid_open(DELCOM_HID_VID, DELCOM_HID_PID, NULL);
   if (!handle) {
     printf("Error: Unable to open device. (%d:%s)\n", errno, strerror(errno));
     return errno;
