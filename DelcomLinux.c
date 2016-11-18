@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     printf("%ls", hid_error(handle));
     return errno;
   } else {
-    printf("Firmware Version: %d\n", my_packet.data[4]);
+    printf("Firmware version: %d\n", my_packet.data[4]);
   }
 
   my_packet.rx.cmd = READ_PORT_CMD;
