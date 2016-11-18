@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <hidapi/hidapi.h>
+#include <errno.h>
 
 typedef union  HIDPacketStruct {
 	unsigned char  Data[256];
@@ -48,9 +49,9 @@ int main(int argc, char* argv[])
 	}
 
 	// Open the device using the VID, PID,
-	handle = hid_open(0xfc5, 0xb080, NULL);
+	handle = hid_open(0x0fc5, 0xb080, NULL);
 	if (!handle) {
-		printf("Error: Unable to open device.\n");
+		printf("Error: Unable to open device. (%d:%s)\n", errno, strerror(errno));
 		return 1;
 	}
 
