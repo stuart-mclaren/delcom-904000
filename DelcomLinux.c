@@ -9,6 +9,7 @@
 // To run: './tryme'  (or 'sudo ./tryme' if you need other rights)
 // Modifications done by Erik Zachrisson - erik@zachrisson.info - 2016/11/18
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -32,10 +33,9 @@ typedef union HIDPacketStruct {
 } HIDPacketStruct, *pHIDPacketStruct;
 
 int main(int argc, char* argv[]) {
-  char Port0, Port1;
-  int res, count, cmd;
+  uint8_t Port0, Port1;
+  int res, cmd;
   hid_device *handle;
-  int report_id;
   HIDPacketStruct MyPacket;
 
   cmd = -1;
