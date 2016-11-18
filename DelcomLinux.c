@@ -6,7 +6,7 @@
 // Requires Lib: hidapi - You must install this package -
 // http://packages.ubuntu.com/source/trusty/hidapi
 // Compile String:  gcc -g -O0 -o tryme DelcomLinux.c -lhidapi-libusb
-// To run: './tryme'  (or 'sudo ./tryme' if you need other rights)
+// To run: './tryme' (or 'sudo ./tryme' if you need other rights)
 // Modifications done by Erik Zachrisson - erik@zachrisson.info - 2016/11/18
 
 #include <ctype.h>
@@ -18,14 +18,14 @@
 #include <errno.h>
 
 typedef union HIDPacketStruct {
-  uint8_t Data[256];
+  uint8_t data[256];
   struct {
-    uint8_t MajorCmd;
-    uint8_t MinorCmd;
-    uint8_t DataLSB;
-    uint8_t DataMSB;
-    uint8_t DataHID[4];
-    uint8_t DataExt[8];
+    uint8_t major_cmd;
+    uint8_t minor_cmd;
+    uint8_t data_lsb;
+    uint8_t data_msb;
+    uint8_t data_hid[4];
+    uint8_t data_ext[8];
   } Tx;
   struct {
     uint8_t Cmd;
@@ -64,26 +64,26 @@ int main(int argc, char* argv[]) {
   printf("Delcom Device found.\n");
   // Read Version (Command #10)
   MyPacket.Rx.Cmd = 10;
-  res = hid_get_feature_report(handle, MyPacket.Data, 8);
+  res = hid_get_feature_report(handle, MyPacket.data, 8);
   if (res < 0) {
     printf("Error: Failed to read device (%d:%s)\n", errno, strerror(errno));
     printf("%ls", hid_error(handle));
     return errno;
   } else {
-    printf("Firmware Version: %d\n", MyPacket.Data[4]);
+    printf("Firmware Version: %d\n", MyPacket.data[4]);
   }
 
   // Read the ports (Command #100).
   MyPacket.Rx.Cmd = 100;
-  res = hid_get_feature_report(handle, MyPacket.Data, 8);
+  res = hid_get_feature_report(handle, MyPacket.data, 8);
   if (res < 0) {
     printf("Error: Failed to read device (%d:%s).\n", errno, strerror(errno));
     printf("%ls", hid_error(handle));
     return errno;
-  }
-  else {     // Get and Display the current pin values
-    port0 = MyPacket.Data[0];
-    port1 = MyPacket.Data[1];
+  } else {
+    // Get and Display the current pin values
+    port0 = MyPacket.data[0];
+    port1 = MyPacket.data[1];
     printf("port0: 0x%02hhx, port1: 0x%02hhx\n", port0, port1);
   }
 
@@ -93,13 +93,13 @@ int main(int argc, char* argv[]) {
     port1 ^= (char) cmd;
     printf("Writing value 0x%02hhx to port1.\n", port1);
     // Write 8 byte command
-    MyPacket.Tx.MajorCmd = 101;
+    MyPacket.Tx.major_cmd = 101;
     // Write to port 1 command
-    MyPacket.Tx.MinorCmd = 2;
+    MyPacket.Tx.minor_cmd = 2;
     // Data to write to port1
-    MyPacket.Tx.DataLSB = port1;
+    MyPacket.Tx.data_lsb = port1;
     // Send it
-    hid_send_feature_report(handle, MyPacket.Data, 8);
+    hid_send_feature_report(handle, MyPacket.data, 8);
   }
 
   printf("All done, closing device and HIDAPI objects!\n");
