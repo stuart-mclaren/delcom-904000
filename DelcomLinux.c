@@ -33,7 +33,7 @@ typedef union HIDPacketStruct {
 } HIDPacketStruct, *pHIDPacketStruct;
 
 int main(int argc, char* argv[]) {
-  uint8_t Port0, Port1;
+  uint8_t port0, port1;
   int res, cmd;
   hid_device *handle;
   HIDPacketStruct MyPacket;
@@ -82,22 +82,22 @@ int main(int argc, char* argv[]) {
     return errno;
   }
   else {     // Get and Display the current pin values
-    Port0 = MyPacket.Data[0];
-    Port1 = MyPacket.Data[1];
-    printf("Port0: 0x%02hhx Port1: 0x%02hhx\n", Port0, Port1);
+    port0 = MyPacket.Data[0];
+    port1 = MyPacket.Data[1];
+    printf("port0: 0x%02hhx, port1: 0x%02hhx\n", port0, port1);
   }
 
   // Now do the write port1 command (if cmd!=-1)
   if (cmd != -1) {
     // XOR the port1 value
-    Port1 ^= (char) cmd;
-    printf("Writing value 0x%02hhx to port1.\n", Port1);
+    port1 ^= (char) cmd;
+    printf("Writing value 0x%02hhx to port1.\n", port1);
     // Write 8 byte command
     MyPacket.Tx.MajorCmd = 101;
     // Write to port 1 command
     MyPacket.Tx.MinorCmd = 2;
-    // Data to write to Port1
-    MyPacket.Tx.DataLSB = Port1;
+    // Data to write to port1
+    MyPacket.Tx.DataLSB = port1;
     // Send it
     hid_send_feature_report(handle, MyPacket.Data, 8);
   }
