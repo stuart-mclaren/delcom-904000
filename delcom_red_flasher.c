@@ -1,4 +1,4 @@
-// Cycles through the colors
+// Flashes red color
 // Copyright Erik Zachrisson: erik@zachrisson.info
 #include <ctype.h>
 #include <stdio.h>
@@ -34,12 +34,10 @@ int main(int argc, char* argv[]) {
   }
 
   while (true) {
-    write_hid(handle, GREEN_COLOR);
-    usleep(200000);
     write_hid(handle, RED_COLOR);
-    usleep(200000);
-    write_hid(handle, YELLOW_COLOR);
-    usleep(200000);
+    usleep(1000000);
+    write_hid(handle, NO_COLOR);
+    usleep(1000000);
   }
   return 0;
 }
