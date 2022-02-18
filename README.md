@@ -13,5 +13,5 @@ $ make all
 ## To run (as root)
 
 ```
-./delcom_on_off green
+# ./delcom_on_off green
 ```
