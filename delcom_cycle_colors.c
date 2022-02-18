@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#include "delcom_linux.h"
+#include "delcom_freebsd.h"
 
 static HIDPacketStruct my_packet;
 

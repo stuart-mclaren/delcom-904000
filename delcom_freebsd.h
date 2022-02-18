@@ -1,6 +1,6 @@
 
-#ifndef _DELCOM_LINUX_H_
-#define _DELCOM_LINUX_H_
+#ifndef _DELCOM_FREEBSD_H_
+#define _DELCOM_FREEBSD_H_
 
 #include <stdint.h>
 #include <hidapi/hidapi.h>

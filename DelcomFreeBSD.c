@@ -1,5 +1,5 @@
 // Delcom Products Inc - 200 William St STE302 Port Chester NY 10573 USA
-// DelcomLinux - A simple linux example to read and write the Delcom USB Device.
+// DelcomFreeBSD - A simple freebsd example to read and write the Delcom USB Device.
 // Works with all Delcom HID device (Generations 2,3+).
 // Version 1.0 April 8, 015 - Tested on Ubuntu V14
 // For Delcom Device commands see http://www.delcomproducts.com/downloads/USBIOHID.pdf
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "delcom_linux.h"
+#include "delcom_freebsd.h"
 
 int main(int argc, char* argv[]) {
   uint8_t port0, port1;
