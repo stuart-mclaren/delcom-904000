@@ -8,7 +8,9 @@
 
 ## To build
 
+```
 $ make all
+```
 
 ## To run (as root)
 
