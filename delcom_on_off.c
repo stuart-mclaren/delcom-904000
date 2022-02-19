@@ -26,13 +26,13 @@ int write_hid(hid_device *hnd, uint8_t data) {
 void usage() {
     printf("Usage:\n");
     printf("Turn off light\n");
-    printf("./delcom off\n");
+    printf("./delcom_on_off off\n");
     printf("Turn on red light\n");
-    printf("./delcom red\n");
+    printf("./delcom_on_off red\n");
     printf("Turn on green light\n");
-    printf("./delcom green\n");
+    printf("./delcom_on_off green\n");
     printf("Turn on yellow light\n");
-    printf("./delcom yellow\n");
+    printf("./delcom_on_off yellow\n");
     return;
 }
 
